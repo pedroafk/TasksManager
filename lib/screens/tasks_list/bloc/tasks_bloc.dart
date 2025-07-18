@@ -55,6 +55,32 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
       }
     });
 
-    //TODO: Adicione UpdateTask, DeleteTask, etc.
+    on<UpdateTask>((event, emit) async {
+      try {
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(userId)
+            .collection('tasks')
+            .doc(event.task.id)
+            .update(event.task.toMap());
+        add(LoadTasks());
+      } catch (e) {
+        emit(TasksError(e.toString()));
+      }
+    });
+
+    on<DeleteTask>((event, emit) async {
+      try {
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(userId)
+            .collection('tasks')
+            .doc(event.taskId)
+            .delete();
+        add(LoadTasks());
+      } catch (e) {
+        emit(TasksError(e.toString()));
+      }
+    });
   }
 }

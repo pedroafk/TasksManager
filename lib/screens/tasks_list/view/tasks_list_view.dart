@@ -67,9 +67,27 @@ class _TasksListViewState extends State<TasksListView> {
                       return ListTile(
                         title: Text(task.title),
                         subtitle: Text(task.description),
-                        trailing: Text(task.status),
+                        trailing: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            IconButton(
+                              icon: Icon(Icons.edit),
+                              onPressed: () {
+                                // Abra o formulário para editar, passando a task
+                              },
+                            ),
+                            IconButton(
+                              icon: Icon(Icons.delete),
+                              onPressed: () {
+                                context.read<TasksBloc>().add(
+                                  DeleteTask(task.id),
+                                );
+                              },
+                            ),
+                          ],
+                        ),
                         onTap: () {
-                          // TODO: Editar tarefa
+                          // Também pode abrir para editar
                         },
                       );
                     },
