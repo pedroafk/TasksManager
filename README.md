@@ -88,6 +88,8 @@ lib/
 assets/
 └── logo
     └── logo_slogan.svg
+└── icon
+    └── icon.png
 ```
 
 ## Prerequisites
