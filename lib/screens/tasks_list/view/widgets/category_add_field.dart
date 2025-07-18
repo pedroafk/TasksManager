@@ -17,7 +17,7 @@ class CategoryAddField extends StatelessWidget {
         Expanded(
           child: TextField(
             controller: controller,
-            decoration: const InputDecoration(labelText: 'Nova categoria'),
+            decoration: const InputDecoration(labelText: 'New Category'),
           ),
         ),
         IconButton(icon: const Icon(Icons.add), onPressed: onAdd),

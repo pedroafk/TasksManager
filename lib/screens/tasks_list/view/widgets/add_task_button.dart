@@ -10,7 +10,7 @@ class AddTaskButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return IconButton(
       icon: const Icon(Icons.add),
-      tooltip: 'Adicionar tarefa',
+      tooltip: 'Add Task',
       onPressed: () async {
         await Navigator.push(
           context,

@@ -24,7 +24,7 @@ class LoginSubmitButton extends StatelessWidget {
           ? const Center(child: CircularProgressIndicator())
           : ElevatedButton.icon(
               icon: const Icon(Icons.login),
-              label: const Text('Entrar'),
+              label: const Text('Login'),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.green,
                 foregroundColor: Colors.white,

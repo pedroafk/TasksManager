@@ -23,7 +23,7 @@ class RegisterSubmitButton extends StatelessWidget {
                   strokeWidth: 2,
                 ),
               )
-            : const Text('Cadastrar'),
+            : const Text('Register'),
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.green,
           foregroundColor: Colors.white,

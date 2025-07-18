@@ -23,7 +23,7 @@ class _CategoryManagerViewState extends State<CategoryManagerView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Categorias')),
+      appBar: AppBar(title: const Text('Manage Categories')),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -49,7 +49,7 @@ class _CategoryManagerViewState extends State<CategoryManagerView> {
                   if (state is CategoriesLoaded) {
                     if (state.categories.isEmpty) {
                       return const Center(
-                        child: Text('Nenhuma categoria cadastrada.'),
+                        child: Text('No categories available.'),
                       );
                     }
                     return ListView.builder(
@@ -66,24 +66,24 @@ class _CategoryManagerViewState extends State<CategoryManagerView> {
                                   text: cat['name'],
                                 );
                                 return AlertDialog(
-                                  title: const Text('Editar categoria'),
+                                  title: const Text('Edit Category'),
                                   content: TextField(
                                     controller: editController,
                                     decoration: const InputDecoration(
-                                      labelText: 'Nome',
+                                      labelText: 'Category Name',
                                     ),
                                   ),
                                   actions: [
                                     TextButton(
                                       onPressed: () => Navigator.pop(context),
-                                      child: const Text('Cancelar'),
+                                      child: const Text('Cancel'),
                                     ),
                                     ElevatedButton(
                                       onPressed: () => Navigator.pop(
                                         context,
                                         editController.text,
                                       ),
-                                      child: const Text('Salvar'),
+                                      child: const Text('Save'),
                                     ),
                                   ],
                                 );
@@ -106,7 +106,7 @@ class _CategoryManagerViewState extends State<CategoryManagerView> {
                     );
                   }
                   if (state is CategoriesError) {
-                    return Center(child: Text('Erro: ${state.message}'));
+                    return Center(child: Text('Error: ${state.message}'));
                   }
                   return const SizedBox.shrink();
                 },

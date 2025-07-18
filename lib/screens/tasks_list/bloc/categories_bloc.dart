@@ -11,7 +11,12 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
     on<LoadCategories>((event, emit) async {
       emit(CategoriesLoading());
       try {
-        final userId = FirebaseAuth.instance.currentUser!.uid;
+        final userId = FirebaseAuth.instance.currentUser?.uid;
+        if (userId == null) {
+          emit(CategoriesLoaded([]));
+          return;
+        }
+
         final snapshot = await FirebaseFirestore.instance
             .collection('users')
             .doc(userId)
@@ -28,7 +33,12 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
 
     on<AddCategory>((event, emit) async {
       try {
-        final userId = FirebaseAuth.instance.currentUser!.uid;
+        final userId = FirebaseAuth.instance.currentUser?.uid;
+        if (userId == null) {
+          emit(CategoriesError('User not authenticated'));
+          return;
+        }
+
         await FirebaseFirestore.instance
             .collection('users')
             .doc(userId)
@@ -42,7 +52,12 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
 
     on<EditCategory>((event, emit) async {
       try {
-        final userId = FirebaseAuth.instance.currentUser!.uid;
+        final userId = FirebaseAuth.instance.currentUser?.uid;
+        if (userId == null) {
+          emit(CategoriesError('User not authenticated'));
+          return;
+        }
+
         await FirebaseFirestore.instance
             .collection('users')
             .doc(userId)
@@ -57,7 +72,12 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
 
     on<DeleteCategory>((event, emit) async {
       try {
-        final userId = FirebaseAuth.instance.currentUser!.uid;
+        final userId = FirebaseAuth.instance.currentUser?.uid;
+        if (userId == null) {
+          emit(CategoriesError('User not authenticated'));
+          return;
+        }
+
         await FirebaseFirestore.instance
             .collection('users')
             .doc(userId)

@@ -11,7 +11,7 @@ class TaskSaveButton extends StatelessWidget {
       height: 48,
       child: ElevatedButton.icon(
         icon: const Icon(Icons.save),
-        label: const Text('Salvar'),
+        label: const Text('Save Task'),
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.green,
           foregroundColor: Colors.white,

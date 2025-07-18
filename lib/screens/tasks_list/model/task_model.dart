@@ -29,7 +29,7 @@ class TaskModel {
   Map<String, dynamic> toMap() => {
     'title': title,
     'description': description,
-    'dueDate': dueDate,
+    'dueDate': Timestamp.fromDate(dueDate),
     'categoryId': categoryId,
     'status': status,
   };

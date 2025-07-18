@@ -39,7 +39,7 @@ class TasksFilterField extends StatelessWidget {
                       controller: textEditingController,
                       focusNode: focusNode,
                       decoration: const InputDecoration(
-                        labelText: 'Filtrar tarefas',
+                        labelText: 'Search Tasks',
                         prefixIcon: Icon(Icons.search),
                       ),
                     );
@@ -85,7 +85,7 @@ class TasksFilterField extends StatelessWidget {
                   },
                   emptyBuilder: (context) => const SizedBox(
                     height: 50,
-                    child: Center(child: Text('Nenhuma tarefa encontrada')),
+                    child: Center(child: Text('No tasks found')),
                   ),
                 );
               },

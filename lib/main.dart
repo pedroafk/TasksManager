@@ -20,34 +20,40 @@ Future<void> _initializeSystem() async {
   await Firebase.initializeApp();
 }
 
-List<BlocProvider> buildProviders() {
-  final userId = FirebaseAuth.instance.currentUser?.uid ?? '';
-  return [
-    BlocProvider<TasksBloc>(create: (_) => TasksBloc(userId)..add(LoadTasks())),
-    BlocProvider<CategoriesBloc>(
-      create: (_) => CategoriesBloc()..add(LoadCategories()),
-    ),
-  ];
-}
-
 class TasksManager extends StatelessWidget {
   const TasksManager({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: buildProviders(),
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: "Tasks Manager",
-        theme: AppTheme.theme,
-        routes: {
-          '/login': (_) => const LoginView(),
-          '/register': (_) => const RegisterView(),
-          '/tasks_list': (_) => const TasksListView(),
-        },
-        home: const SplashView(),
-      ),
+    return StreamBuilder<User?>(
+      stream: FirebaseAuth.instance.authStateChanges(),
+      builder: (context, snapshot) {
+        final user = snapshot.data;
+        final userId = user?.uid ?? '';
+
+        return MultiBlocProvider(
+          key: ValueKey(userId),
+          providers: [
+            BlocProvider<TasksBloc>(
+              create: (_) => TasksBloc(userId)..add(LoadTasks()),
+            ),
+            BlocProvider<CategoriesBloc>(
+              create: (_) => CategoriesBloc()..add(LoadCategories()),
+            ),
+          ],
+          child: MaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: "Tasks Manager",
+            theme: AppTheme.theme,
+            routes: {
+              '/login': (_) => const LoginView(),
+              '/register': (_) => const RegisterView(),
+              '/tasks_list': (_) => const TasksListView(),
+            },
+            home: const SplashView(),
+          ),
+        );
+      },
     );
   }
 }

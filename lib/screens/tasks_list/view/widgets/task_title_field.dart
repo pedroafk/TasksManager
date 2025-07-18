@@ -9,10 +9,10 @@ class TaskTitleField extends StatelessWidget {
     return TextFormField(
       controller: controller,
       decoration: const InputDecoration(
-        labelText: 'Título',
+        labelText: 'Title',
         border: OutlineInputBorder(),
       ),
-      validator: (v) => v == null || v.isEmpty ? 'Informe o título' : null,
+      validator: (v) => v == null || v.isEmpty ? 'Enter the title' : null,
     );
   }
 }

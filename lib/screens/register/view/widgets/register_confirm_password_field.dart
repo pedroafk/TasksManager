@@ -9,7 +9,7 @@ class RegisterConfirmPasswordField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       decoration: const InputDecoration(
-        labelText: 'Confirmar senha',
+        labelText: 'Confirm Password',
         prefixIcon: Icon(Icons.lock_outline),
         border: OutlineInputBorder(),
       ),
@@ -19,7 +19,7 @@ class RegisterConfirmPasswordField extends StatelessWidget {
       ),
       validator: (value) => value == context.read<RegisterBloc>().state.password
           ? null
-          : 'As senhas não coincidem',
+          : 'Passwords do not match.',
     );
   }
 }
