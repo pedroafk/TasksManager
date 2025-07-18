@@ -102,10 +102,13 @@ assets/
 4. Enable **Authentication** (Email/Password) and **Cloud Firestore** in the Firebase Console.
 
 ## How to Run
-Clone the repository and run the following command in the project root:
+Clone the repository and run the following commands in the project root:
 
 ```powershell
-flutter pub get; flutter run
+git clone https://github.com/pedroafk/TasksManager.git
+cd TasksManager
+flutter pub get
+flutter run
 ```
 
 This command will install all dependencies and launch the app on your connected device or emulator.
