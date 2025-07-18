@@ -1,7 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tasks_manager/screens/splash/splash.dart';
+import 'package:tasks_manager/screens/login/view/login_view.dart';
+import 'package:tasks_manager/screens/splash/view/splash_view.dart';
+import 'package:tasks_manager/screens/tasks_list/view/tasks_list_view.dart';
+import 'package:tasks_manager/theme/app_theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,17 +20,15 @@ class TasksManager extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: _getBlocProviders(),
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: "Tasks Manager",
-        home: const Splash(),
-      ),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: "Tasks Manager",
+      theme: AppTheme.theme,
+      routes: {
+        '/login': (_) => const LoginView(),
+        '/tasks_list': (_) => const TasksListView(),
+      },
+      home: const SplashView(),
     );
   }
-}
-
-List<BlocProvider> _getBlocProviders() {
-  return [];
 }

@@ -1,7 +1,4 @@
-plugins {
-    // ...outros plugins...
-    id("com.google.gms.google-services") version "4.4.3" apply false
-}
+import org.gradle.api.tasks.Delete
 
 allprojects {
     repositories {
@@ -21,6 +18,6 @@ subprojects {
     project.evaluationDependsOn(":app")
 }
 
-tasks.register("clean", Delete) {
-    delete rootProject.layout.buildDirectory
+tasks.register<Delete>("clean") {
+    delete(rootProject.layout.buildDirectory)
 }
