@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tasks_manager/screens/tasks_list/bloc/categories_bloc.dart';
+import 'package:tasks_manager/screens/tasks_list/model/task_model.dart';
 import 'package:tasks_manager/screens/tasks_list/view/category_manager_view.dart';
+import 'package:tasks_manager/screens/tasks_list/bloc/tasks_bloc.dart';
 
 class TaskFormView extends StatefulWidget {
   const TaskFormView({super.key});
@@ -25,22 +25,6 @@ class _TaskFormViewState extends State<TaskFormView> {
     super.initState();
     _titleController.addListener(() => setState(() {}));
     _descController.addListener(() => setState(() {}));
-  }
-
-  // TODO: colocar no bloc
-  Future<void> _saveTask() async {
-    final userId = FirebaseAuth.instance.currentUser!.uid;
-    await FirebaseFirestore.instance
-        .collection('users')
-        .doc(userId)
-        .collection('tasks')
-        .add({
-          'title': _titleController.text,
-          'description': _descController.text,
-          'dueDate': _dueDate,
-          'categoryId': _selectedCategoryId,
-          'status': _selectedStatus,
-        });
   }
 
   bool get _isFormValid =>
@@ -178,7 +162,15 @@ class _TaskFormViewState extends State<TaskFormView> {
                       ? () async {
                           if (_formKey.currentState!.validate() &&
                               _dueDate != null) {
-                            await _saveTask();
+                            final task = TaskModel(
+                              id: '',
+                              title: _titleController.text,
+                              description: _descController.text,
+                              dueDate: _dueDate!,
+                              categoryId: _selectedCategoryId!,
+                              status: _selectedStatus,
+                            );
+                            context.read<TasksBloc>().add(AddTask(task));
                             if (context.mounted) Navigator.pop(context);
                           } else if (_dueDate == null) {
                             ScaffoldMessenger.of(context).showSnackBar(
