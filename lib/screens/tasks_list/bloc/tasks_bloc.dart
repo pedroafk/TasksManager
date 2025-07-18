@@ -42,6 +42,6 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
       emit(TasksLoaded(filtered));
     });
 
-    // Adicione AddTask, UpdateTask, DeleteTask, etc.
+    //TODO: Adicione AddTask, UpdateTask, DeleteTask, etc.
   }
 }

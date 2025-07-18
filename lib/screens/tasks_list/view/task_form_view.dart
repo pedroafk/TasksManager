@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tasks_manager/screens/tasks_list/bloc/categories_bloc.dart';
 import 'package:tasks_manager/screens/tasks_list/view/category_manager_view.dart';
 
 class TaskFormView extends StatefulWidget {
@@ -18,30 +20,14 @@ class _TaskFormViewState extends State<TaskFormView> {
   String? _selectedCategoryId;
   String _selectedStatus = 'To do';
 
-  List<Map<String, dynamic>> _categories = [];
-
   @override
   void initState() {
     super.initState();
-    _loadCategories();
     _titleController.addListener(() => setState(() {}));
     _descController.addListener(() => setState(() {}));
   }
 
-  Future<void> _loadCategories() async {
-    final userId = FirebaseAuth.instance.currentUser!.uid;
-    final snapshot = await FirebaseFirestore.instance
-        .collection('users')
-        .doc(userId)
-        .collection('categories')
-        .get();
-    setState(() {
-      _categories = snapshot.docs
-          .map((doc) => {'id': doc.id, 'name': doc['name']})
-          .toList();
-    });
-  }
-
+  // TODO: colocar no bloc
   Future<void> _saveTask() async {
     final userId = FirebaseAuth.instance.currentUser!.uid;
     await FirebaseFirestore.instance
@@ -115,42 +101,50 @@ class _TaskFormViewState extends State<TaskFormView> {
                 },
               ),
               const SizedBox(height: 16),
-              Row(
-                children: [
-                  Expanded(
-                    child: DropdownButtonFormField<String>(
-                      value: _selectedCategoryId,
-                      decoration: const InputDecoration(
-                        labelText: 'Categoria',
-                        border: OutlineInputBorder(),
-                      ),
-                      items: _categories
-                          .map(
-                            (cat) => DropdownMenuItem<String>(
-                              value: cat['id'] as String,
-                              child: Text(cat['name'] as String),
+              BlocBuilder<CategoriesBloc, CategoriesState>(
+                builder: (context, state) {
+                  if (state is CategoriesLoaded) {
+                    final categories = state.categories;
+                    return Row(
+                      children: [
+                        Expanded(
+                          child: DropdownButtonFormField<String>(
+                            value: _selectedCategoryId,
+                            decoration: const InputDecoration(
+                              labelText: 'Categoria',
+                              border: OutlineInputBorder(),
                             ),
-                          )
-                          .toList(),
-                      onChanged: (v) => setState(() => _selectedCategoryId = v),
-                      validator: (v) =>
-                          v == null ? 'Selecione uma categoria' : null,
-                    ),
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.edit),
-                    tooltip: 'Gerenciar categorias',
-                    onPressed: () async {
-                      await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => const CategoryManagerView(),
+                            items: categories
+                                .map(
+                                  (cat) => DropdownMenuItem<String>(
+                                    value: cat['id'] as String,
+                                    child: Text(cat['name'] as String),
+                                  ),
+                                )
+                                .toList(),
+                            onChanged: (v) =>
+                                setState(() => _selectedCategoryId = v),
+                            validator: (v) =>
+                                v == null ? 'Selecione uma categoria' : null,
+                          ),
                         ),
-                      );
-                      await _loadCategories();
-                    },
-                  ),
-                ],
+                        IconButton(
+                          icon: const Icon(Icons.edit),
+                          tooltip: 'Gerenciar categorias',
+                          onPressed: () async {
+                            await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => const CategoryManagerView(),
+                              ),
+                            );
+                          },
+                        ),
+                      ],
+                    );
+                  }
+                  return const CircularProgressIndicator();
+                },
               ),
               const SizedBox(height: 16),
               DropdownButtonFormField<String>(

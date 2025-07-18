@@ -69,7 +69,7 @@ class _TasksListViewState extends State<TasksListView> {
                         subtitle: Text(task.description),
                         trailing: Text(task.status),
                         onTap: () {
-                          // Editar tarefa
+                          // TODO: Editar tarefa
                         },
                       );
                     },
