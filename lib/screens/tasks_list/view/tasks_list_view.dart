@@ -17,6 +17,12 @@ class _TasksListViewState extends State<TasksListView> {
   final _filterController = TextEditingController();
 
   @override
+  void initState() {
+    super.initState();
+    context.read<TasksBloc>().add(LoadTasks());
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocListener<TasksBloc, TasksState>(
       listener: (context, state) {
@@ -57,7 +63,7 @@ class _TasksListViewState extends State<TasksListView> {
                 Expanded(
                   child: BlocBuilder<TasksBloc, TasksState>(
                     builder: (context, state) {
-                      if (state is TasksLoading) {
+                      if (state is TasksLoading || state is TasksInitial) {
                         return const Center(child: CircularProgressIndicator());
                       }
                       if (state is TasksLoaded) {
