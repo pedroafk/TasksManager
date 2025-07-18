@@ -25,7 +25,7 @@ class TaskCategoryDropdown extends StatelessWidget {
                 child: DropdownButtonFormField<String>(
                   value: selectedCategoryId,
                   decoration: const InputDecoration(
-                    labelText: 'Categoria',
+                    labelText: 'Category',
                     border: OutlineInputBorder(),
                   ),
                   items: categories
@@ -37,13 +37,12 @@ class TaskCategoryDropdown extends StatelessWidget {
                       )
                       .toList(),
                   onChanged: onChanged,
-                  validator: (v) =>
-                      v == null ? 'Selecione uma categoria' : null,
+                  validator: (v) => v == null ? 'Select a category' : null,
                 ),
               ),
               IconButton(
                 icon: const Icon(Icons.edit),
-                tooltip: 'Gerenciar categorias',
+                tooltip: 'Manage Categories',
                 onPressed: () async {
                   await Navigator.push(
                     context,

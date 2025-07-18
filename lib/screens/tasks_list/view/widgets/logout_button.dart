@@ -8,20 +8,20 @@ class LogoutButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return IconButton(
       icon: const Icon(Icons.logout),
-      tooltip: 'Sair',
+      tooltip: 'Logout',
       onPressed: () async {
         final confirmed = await showDialog<bool>(
           context: context,
           builder: (context) => AlertDialog(
-            title: const Text('Sair'),
-            content: const Text('Tem certeza que deseja sair?'),
+            title: const Text('Logout'),
+            content: const Text('Are you sure you want to logout?'),
             actions: [
               TextButton(
-                child: const Text('Cancelar'),
+                child: const Text('Cancel'),
                 onPressed: () => Navigator.of(context).pop(false),
               ),
               TextButton(
-                child: const Text('Sim'),
+                child: const Text('Logout'),
                 onPressed: () => Navigator.of(context).pop(true),
               ),
             ],

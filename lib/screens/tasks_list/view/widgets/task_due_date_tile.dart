@@ -15,8 +15,8 @@ class TaskDueDateTile extends StatelessWidget {
       contentPadding: EdgeInsets.zero,
       title: Text(
         dueDate == null
-            ? 'Data de vencimento'
-            : 'Vence em: ${dueDate!.day}/${dueDate!.month}/${dueDate!.year}',
+            ? 'Select Due Date'
+            : 'Expires in: ${dueDate!.day}/${dueDate!.month}/${dueDate!.year}',
       ),
       trailing: const Icon(Icons.calendar_today),
       onTap: () async {

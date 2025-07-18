@@ -72,12 +72,12 @@ class _LoginViewState extends State<LoginView> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text('Não tem conta?'),
+                          const Text('Don\'t have an account?'),
                           TextButton(
                             onPressed: () {
                               Navigator.pushNamed(context, '/register');
                             },
-                            child: const Text('Cadastre-se'),
+                            child: const Text('Register here'),
                           ),
                         ],
                       ),

@@ -8,7 +8,7 @@ class LoginTitle extends StatelessWidget {
     return Column(
       children: [
         Text(
-          'Bem-vindo!',
+          'Welcome',
           style: TextStyle(
             fontSize: 26,
             fontWeight: FontWeight.bold,
@@ -17,7 +17,7 @@ class LoginTitle extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         Text(
-          'Entre para continuar',
+          'Sign in to continue',
           style: TextStyle(fontSize: 16, color: Colors.green[700]),
         ),
       ],

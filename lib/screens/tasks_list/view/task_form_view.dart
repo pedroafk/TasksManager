@@ -49,65 +49,81 @@ class _TaskFormViewState extends State<TaskFormView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Nova Tarefa'),
+        title: Text(widget.task == null ? 'New Task' : 'Edit Task'),
         backgroundColor: Colors.green,
         foregroundColor: Colors.white,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Form(
-          key: _formKey,
-          child: ListView(
-            children: [
-              TaskTitleField(controller: _titleController),
-              const SizedBox(height: 16),
-              TaskDescriptionField(controller: _descController),
-              const SizedBox(height: 16),
-              TaskDueDateTile(
-                dueDate: _dueDate,
-                onDatePicked: (picked) => setState(() => _dueDate = picked),
-              ),
-              const SizedBox(height: 16),
-              TaskCategoryDropdown(
-                selectedCategoryId: _selectedCategoryId,
-                onChanged: (v) => setState(() => _selectedCategoryId = v),
-              ),
-              const SizedBox(height: 16),
-              TaskStatusDropdown(
-                selectedStatus: _selectedStatus,
-                onChanged: (v) => setState(() => _selectedStatus = v!),
-              ),
-              const SizedBox(height: 24),
-              TaskSaveButton(
-                onPressed: _isFormValid
-                    ? () async {
-                        if (_formKey.currentState!.validate() &&
-                            _dueDate != null) {
-                          final task = TaskModel(
-                            id: widget.task?.id ?? '',
-                            title: _titleController.text,
-                            description: _descController.text,
-                            dueDate: _dueDate!,
-                            categoryId: _selectedCategoryId!,
-                            status: _selectedStatus,
-                          );
-                          if (widget.task == null) {
-                            context.read<TasksBloc>().add(AddTask(task));
-                          } else {
-                            context.read<TasksBloc>().add(UpdateTask(task));
-                          }
-                          if (context.mounted) Navigator.pop(context);
-                        } else if (_dueDate == null) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Selecione a data de vencimento'),
-                            ),
-                          );
-                        }
-                      }
-                    : null,
-              ),
-            ],
+      body: BlocListener<TasksBloc, TasksState>(
+        listener: (context, state) {
+          if (state is TasksError) {
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text('Error: ${state.message}')));
+          }
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Form(
+            key: _formKey,
+            child: ListView(
+              children: [
+                TaskTitleField(controller: _titleController),
+                const SizedBox(height: 16),
+                TaskDescriptionField(controller: _descController),
+                const SizedBox(height: 16),
+                TaskDueDateTile(
+                  dueDate: _dueDate,
+                  onDatePicked: (picked) => setState(() => _dueDate = picked),
+                ),
+                const SizedBox(height: 16),
+                TaskCategoryDropdown(
+                  selectedCategoryId: _selectedCategoryId,
+                  onChanged: (v) => setState(() => _selectedCategoryId = v),
+                ),
+                const SizedBox(height: 16),
+                TaskStatusDropdown(
+                  selectedStatus: _selectedStatus,
+                  onChanged: (v) => setState(() => _selectedStatus = v!),
+                ),
+                const SizedBox(height: 24),
+                BlocBuilder<TasksBloc, TasksState>(
+                  builder: (context, state) {
+                    final isLoading = state is TasksLoading;
+                    return TaskSaveButton(
+                      onPressed: (_isFormValid && !isLoading)
+                          ? () async {
+                              if (_formKey.currentState!.validate() &&
+                                  _dueDate != null) {
+                                final task = TaskModel(
+                                  id: widget.task?.id ?? '',
+                                  title: _titleController.text,
+                                  description: _descController.text,
+                                  dueDate: _dueDate!,
+                                  categoryId: _selectedCategoryId!,
+                                  status: _selectedStatus,
+                                );
+                                if (widget.task == null) {
+                                  context.read<TasksBloc>().add(AddTask(task));
+                                } else {
+                                  context.read<TasksBloc>().add(
+                                    UpdateTask(task),
+                                  );
+                                }
+                                if (context.mounted) Navigator.pop(context);
+                              } else if (_dueDate == null) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text('Please select a due date.'),
+                                  ),
+                                );
+                              }
+                            }
+                          : null,
+                    );
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),

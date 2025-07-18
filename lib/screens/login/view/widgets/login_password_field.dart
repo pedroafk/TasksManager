@@ -9,14 +9,14 @@ class LoginPasswordField extends StatelessWidget {
     return TextFormField(
       controller: controller,
       decoration: const InputDecoration(
-        labelText: 'Senha',
+        labelText: 'Password',
         prefixIcon: Icon(Icons.lock),
         border: OutlineInputBorder(),
       ),
       obscureText: true,
       validator: (value) => value != null && value.length >= 6
           ? null
-          : 'Senha mínima de 6 caracteres',
+          : 'Minimum password of 6 characters.',
     );
   }
 }

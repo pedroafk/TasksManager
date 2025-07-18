@@ -9,7 +9,7 @@ class TaskDescriptionField extends StatelessWidget {
     return TextFormField(
       controller: controller,
       decoration: const InputDecoration(
-        labelText: 'Descrição',
+        labelText: 'Description',
         border: OutlineInputBorder(),
       ),
       maxLines: 3,

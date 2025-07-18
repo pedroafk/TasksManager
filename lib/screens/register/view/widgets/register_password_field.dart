@@ -9,7 +9,7 @@ class RegisterPasswordField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       decoration: const InputDecoration(
-        labelText: 'Senha',
+        labelText: 'Password',
         prefixIcon: Icon(Icons.lock),
         border: OutlineInputBorder(),
       ),
@@ -18,7 +18,7 @@ class RegisterPasswordField extends StatelessWidget {
           context.read<RegisterBloc>().add(RegisterPasswordChanged(value)),
       validator: (value) => value != null && value.length >= 6
           ? null
-          : 'Senha mínima de 6 caracteres',
+          : 'Minimum password of 6 characters.',
     );
   }
 }

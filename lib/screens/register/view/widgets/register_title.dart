@@ -6,7 +6,7 @@ class RegisterTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      'Crie sua conta',
+      'Create Account',
       style: TextStyle(
         fontSize: 26,
         fontWeight: FontWeight.bold,

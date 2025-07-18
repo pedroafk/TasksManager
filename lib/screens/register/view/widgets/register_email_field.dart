@@ -18,7 +18,7 @@ class RegisterEmailField extends StatelessWidget {
           context.read<RegisterBloc>().add(RegisterEmailChanged(value)),
       validator: (value) => value != null && value.contains('@')
           ? null
-          : 'Digite um e-mail válido',
+          : 'Enter a valid email address.',
     );
   }
 }

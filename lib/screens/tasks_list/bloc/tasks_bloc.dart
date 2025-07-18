@@ -15,6 +15,12 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
     on<LoadTasks>((event, emit) async {
       emit(TasksLoading());
       try {
+        if (userId.isEmpty) {
+          _allTasks = [];
+          emit(TasksLoaded(_allTasks));
+          return;
+        }
+
         final snapshot = await FirebaseFirestore.instance
             .collection('users')
             .doc(userId)
@@ -48,6 +54,11 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
 
     on<AddTask>((event, emit) async {
       try {
+        if (userId.isEmpty) {
+          emit(TasksError('User not authenticated'));
+          return;
+        }
+
         await FirebaseFirestore.instance
             .collection('users')
             .doc(userId)
@@ -61,6 +72,11 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
 
     on<UpdateTask>((event, emit) async {
       try {
+        if (userId.isEmpty) {
+          emit(TasksError('User not authenticated'));
+          return;
+        }
+
         await FirebaseFirestore.instance
             .collection('users')
             .doc(userId)
@@ -75,6 +91,11 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
 
     on<DeleteTask>((event, emit) async {
       try {
+        if (userId.isEmpty) {
+          emit(TasksError('User not authenticated'));
+          return;
+        }
+
         await FirebaseFirestore.instance
             .collection('users')
             .doc(userId)

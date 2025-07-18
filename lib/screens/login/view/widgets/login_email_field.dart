@@ -16,7 +16,7 @@ class LoginEmailField extends StatelessWidget {
       keyboardType: TextInputType.emailAddress,
       validator: (value) => value != null && value.contains('@')
           ? null
-          : 'Digite um e-mail válido',
+          : 'Enter a valid email address.',
     );
   }
 }

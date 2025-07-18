@@ -32,7 +32,7 @@ class _TasksListViewState extends State<TasksListView> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Minhas Tarefas'),
+          title: const Text('Tasks List'),
           actions: [
             const AddTaskButton(),
             LogoutButton(
@@ -56,7 +56,7 @@ class _TasksListViewState extends State<TasksListView> {
                       if (state is TasksLoaded) {
                         if (state.tasks.isEmpty) {
                           return const Center(
-                            child: Text('Nenhuma tarefa encontrada.'),
+                            child: Text('No tasks available.'),
                           );
                         }
                         return ListView.builder(
@@ -68,7 +68,7 @@ class _TasksListViewState extends State<TasksListView> {
                         );
                       }
                       return const Center(
-                        child: Text('Erro ao carregar tarefas.'),
+                        child: Text('An error occurred while loading tasks.'),
                       );
                     },
                   ),

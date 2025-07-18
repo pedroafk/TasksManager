@@ -26,7 +26,7 @@ class _RegisterViewState extends State<RegisterView> {
           if (state.isSuccess) {
             Navigator.pop(context);
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Cadastro realizado com sucesso!')),
+              const SnackBar(content: Text('Registration successful!')),
             );
           }
           if (state.error != null) {
@@ -39,7 +39,7 @@ class _RegisterViewState extends State<RegisterView> {
           return Scaffold(
             backgroundColor: Colors.green[50],
             appBar: AppBar(
-              title: const Text('Cadastro'),
+              title: const Text('Register'),
               backgroundColor: Colors.green,
               foregroundColor: Colors.white,
             ),
@@ -67,12 +67,12 @@ class _RegisterViewState extends State<RegisterView> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text('Já tem conta?'),
+                          const Text('Already have an account?'),
                           TextButton(
                             onPressed: () {
                               Navigator.pop(context);
                             },
-                            child: const Text('Entrar'),
+                            child: const Text('Login'),
                           ),
                         ],
                       ),
