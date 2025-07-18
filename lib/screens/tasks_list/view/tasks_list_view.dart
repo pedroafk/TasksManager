@@ -65,25 +65,11 @@ class _TasksListViewState extends State<TasksListView> {
                     itemBuilder: (context, index) {
                       final task = state.tasks[index];
                       return ListTile(
-                        title: Text(task.title),
+                        title: Text("${task.status} - ${task.title}"),
                         subtitle: Text(task.description),
                         trailing: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            IconButton(
-                              icon: Icon(Icons.edit),
-                              onPressed: () async {
-                                await Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (_) => TaskFormView(task: task),
-                                  ),
-                                );
-                                if (!mounted) return;
-                                // ignore: use_build_context_synchronously
-                                context.read<TasksBloc>().add(LoadTasks());
-                              },
-                            ),
                             IconButton(
                               icon: Icon(Icons.delete),
                               onPressed: () {
@@ -94,8 +80,16 @@ class _TasksListViewState extends State<TasksListView> {
                             ),
                           ],
                         ),
-                        onTap: () {
-                          // Também pode abrir para editar
+                        onTap: () async {
+                          await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => TaskFormView(task: task),
+                            ),
+                          );
+                          if (!mounted) return;
+                          // ignore: use_build_context_synchronously
+                          context.read<TasksBloc>().add(LoadTasks());
                         },
                       );
                     },
