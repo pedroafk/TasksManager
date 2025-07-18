@@ -37,6 +37,9 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
                 task.description.toLowerCase().contains(
                   event.filter.toLowerCase(),
                 ) ||
+                task.categoryId.toLowerCase().contains(
+                  event.filter.toLowerCase(),
+                ) ||
                 task.status.toLowerCase().contains(event.filter.toLowerCase()),
           )
           .toList();
