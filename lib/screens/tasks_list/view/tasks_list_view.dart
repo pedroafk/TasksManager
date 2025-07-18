@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tasks_manager/screens/tasks_list/view/widgets/task_list_tile.dart';
+import 'package:tasks_manager/screens/tasks_list/view/widgets/tasks_filter_field.dart';
 import '../bloc/tasks_bloc.dart';
-import 'task_form_view.dart';
 import 'widgets/logout_button.dart';
 import 'widgets/add_task_button.dart';
 
@@ -46,20 +46,7 @@ class _TasksListViewState extends State<TasksListView> {
           children: [
             Column(
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: TextField(
-                    controller: _filterController,
-                    // TODO filtro
-                    decoration: const InputDecoration(
-                      labelText: 'Filtrar tarefas',
-                      prefixIcon: Icon(Icons.search),
-                    ),
-                    onChanged: (value) {
-                      context.read<TasksBloc>().add(FilterTasks(value));
-                    },
-                  ),
-                ),
+                TasksFilterField(controller: _filterController),
                 Expanded(
                   child: BlocBuilder<TasksBloc, TasksState>(
                     builder: (context, state) {
