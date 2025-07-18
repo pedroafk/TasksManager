@@ -6,7 +6,8 @@ import 'package:tasks_manager/screens/tasks_list/view/category_manager_view.dart
 import 'package:tasks_manager/screens/tasks_list/bloc/tasks_bloc.dart';
 
 class TaskFormView extends StatefulWidget {
-  const TaskFormView({super.key});
+  final TaskModel? task;
+  const TaskFormView({super.key, this.task});
 
   @override
   State<TaskFormView> createState() => _TaskFormViewState();
@@ -23,6 +24,13 @@ class _TaskFormViewState extends State<TaskFormView> {
   @override
   void initState() {
     super.initState();
+    if (widget.task != null) {
+      _titleController.text = widget.task!.title;
+      _descController.text = widget.task!.description;
+      _dueDate = widget.task!.dueDate;
+      _selectedCategoryId = widget.task!.categoryId;
+      _selectedStatus = widget.task!.status;
+    }
     _titleController.addListener(() => setState(() {}));
     _descController.addListener(() => setState(() {}));
   }
@@ -163,14 +171,18 @@ class _TaskFormViewState extends State<TaskFormView> {
                           if (_formKey.currentState!.validate() &&
                               _dueDate != null) {
                             final task = TaskModel(
-                              id: '',
+                              id: widget.task?.id ?? '',
                               title: _titleController.text,
                               description: _descController.text,
                               dueDate: _dueDate!,
                               categoryId: _selectedCategoryId!,
                               status: _selectedStatus,
                             );
-                            context.read<TasksBloc>().add(AddTask(task));
+                            if (widget.task == null) {
+                              context.read<TasksBloc>().add(AddTask(task));
+                            } else {
+                              context.read<TasksBloc>().add(UpdateTask(task));
+                            }
                             if (context.mounted) Navigator.pop(context);
                           } else if (_dueDate == null) {
                             ScaffoldMessenger.of(context).showSnackBar(

@@ -72,8 +72,16 @@ class _TasksListViewState extends State<TasksListView> {
                           children: [
                             IconButton(
                               icon: Icon(Icons.edit),
-                              onPressed: () {
-                                // Abra o formulário para editar, passando a task
+                              onPressed: () async {
+                                await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) => TaskFormView(task: task),
+                                  ),
+                                );
+                                if (!mounted) return;
+                                // ignore: use_build_context_synchronously
+                                context.read<TasksBloc>().add(LoadTasks());
                               },
                             ),
                             IconButton(
