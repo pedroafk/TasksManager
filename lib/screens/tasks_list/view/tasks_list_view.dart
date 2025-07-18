@@ -14,6 +14,8 @@ class TasksListView extends StatefulWidget {
 class _TasksListViewState extends State<TasksListView> {
   final _filterController = TextEditingController();
 
+  // TODO: implementar logout
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

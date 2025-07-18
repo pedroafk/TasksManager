@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../bloc/register_bloc.dart';
+import 'widgets/register_email_field.dart';
+import 'widgets/register_password_field.dart';
+import 'widgets/register_confirm_password_field.dart';
+import 'widgets/register_submit_button.dart';
+import 'widgets/register_title.dart';
 
 class RegisterView extends StatefulWidget {
   const RegisterView({super.key});
@@ -49,93 +54,15 @@ class _RegisterViewState extends State<RegisterView> {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text(
-                        'Crie sua conta',
-                        style: TextStyle(
-                          fontSize: 26,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.green[800],
-                        ),
-                      ),
+                      const RegisterTitle(),
                       const SizedBox(height: 32),
-                      TextFormField(
-                        decoration: const InputDecoration(
-                          labelText: 'E-mail',
-                          prefixIcon: Icon(Icons.email),
-                          border: OutlineInputBorder(),
-                        ),
-                        keyboardType: TextInputType.emailAddress,
-                        onChanged: (value) => context.read<RegisterBloc>().add(
-                          RegisterEmailChanged(value),
-                        ),
-                        validator: (value) =>
-                            value != null && value.contains('@')
-                            ? null
-                            : 'Digite um e-mail válido',
-                      ),
+                      const RegisterEmailField(),
                       const SizedBox(height: 16),
-                      TextFormField(
-                        decoration: const InputDecoration(
-                          labelText: 'Senha',
-                          prefixIcon: Icon(Icons.lock),
-                          border: OutlineInputBorder(),
-                        ),
-                        obscureText: true,
-                        onChanged: (value) => context.read<RegisterBloc>().add(
-                          RegisterPasswordChanged(value),
-                        ),
-                        validator: (value) => value != null && value.length >= 6
-                            ? null
-                            : 'Senha mínima de 6 caracteres',
-                      ),
+                      const RegisterPasswordField(),
                       const SizedBox(height: 16),
-                      TextFormField(
-                        decoration: const InputDecoration(
-                          labelText: 'Confirmar senha',
-                          prefixIcon: Icon(Icons.lock_outline),
-                          border: OutlineInputBorder(),
-                        ),
-                        obscureText: true,
-                        onChanged: (value) => context.read<RegisterBloc>().add(
-                          RegisterConfirmPasswordChanged(value),
-                        ),
-                        validator: (value) =>
-                            value == context.read<RegisterBloc>().state.password
-                            ? null
-                            : 'As senhas não coincidem',
-                      ),
+                      const RegisterConfirmPasswordField(),
                       const SizedBox(height: 24),
-                      SizedBox(
-                        width: double.infinity,
-                        height: 48,
-                        child: ElevatedButton.icon(
-                          icon: const Icon(Icons.person_add),
-                          label: state.isSubmitting
-                              ? const SizedBox(
-                                  width: 20,
-                                  height: 20,
-                                  child: CircularProgressIndicator(
-                                    color: Colors.white,
-                                    strokeWidth: 2,
-                                  ),
-                                )
-                              : const Text('Cadastrar'),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.green,
-                            foregroundColor: Colors.white,
-                            textStyle: const TextStyle(fontSize: 18),
-                          ),
-                          onPressed: state.isFormValid && !state.isSubmitting
-                              ? () {
-                                  if (_formKey.currentState!.validate()) {
-                                    context.read<RegisterBloc>().add(
-                                      RegisterSubmitted(),
-                                    );
-                                  }
-                                }
-                              : null,
-                        ),
-                      ),
+                      RegisterSubmitButton(formKey: _formKey),
                       const SizedBox(height: 24),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
