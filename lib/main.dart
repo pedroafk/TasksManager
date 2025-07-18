@@ -32,6 +32,7 @@ class TasksManager extends StatelessWidget {
         final userId = user?.uid ?? '';
 
         return MultiBlocProvider(
+          key: ValueKey(userId),
           providers: [
             BlocProvider<TasksBloc>(
               create: (_) => TasksBloc(userId)..add(LoadTasks()),

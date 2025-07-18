@@ -110,8 +110,14 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
 
     on<LogoutRequested>((event, emit) async {
       emit(LoggingOut());
+      _allTasks = [];
       await FirebaseAuth.instance.signOut();
       emit(LoggedOut());
+    });
+
+    on<ClearTasks>((event, emit) {
+      _allTasks = [];
+      emit(TasksLoaded(_allTasks));
     });
   }
 }

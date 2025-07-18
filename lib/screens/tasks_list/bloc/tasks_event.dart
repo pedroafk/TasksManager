@@ -29,4 +29,6 @@ class FilterTasks extends TasksEvent {
   const FilterTasks(this.filter);
 }
 
+class ClearTasks extends TasksEvent {}
+
 class LogoutRequested extends TasksEvent {}

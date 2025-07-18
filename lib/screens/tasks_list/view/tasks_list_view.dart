@@ -27,7 +27,11 @@ class _TasksListViewState extends State<TasksListView> {
     return BlocListener<TasksBloc, TasksState>(
       listener: (context, state) {
         if (state is LoggedOut) {
-          Navigator.pushReplacementNamed(context, '/login');
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            '/login',
+            (route) => false,
+          );
         }
       },
       child: Scaffold(
