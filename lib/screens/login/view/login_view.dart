@@ -15,6 +15,17 @@ class _LoginViewState extends State<LoginView> {
   final _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
+  bool get _isFormValid =>
+      _emailController.text.contains('@') &&
+      _passwordController.text.length >= 6;
+
+  @override
+  void initState() {
+    super.initState();
+    _emailController.addListener(() => setState(() {}));
+    _passwordController.addListener(() => setState(() {}));
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -106,16 +117,20 @@ class _LoginViewState extends State<LoginView> {
                                   foregroundColor: Colors.white,
                                   textStyle: const TextStyle(fontSize: 18),
                                 ),
-                                onPressed: () {
-                                  if (_formKey.currentState!.validate()) {
-                                    context.read<LoginBloc>().add(
-                                      LoginSubmitted(
-                                        email: _emailController.text,
-                                        password: _passwordController.text,
-                                      ),
-                                    );
-                                  }
-                                },
+                                onPressed:
+                                    _isFormValid && state is! LoginLoading
+                                    ? () {
+                                        if (_formKey.currentState!.validate()) {
+                                          context.read<LoginBloc>().add(
+                                            LoginSubmitted(
+                                              email: _emailController.text,
+                                              password:
+                                                  _passwordController.text,
+                                            ),
+                                          );
+                                        }
+                                      }
+                                    : null,
                               ),
                       ),
                       const SizedBox(height: 24),

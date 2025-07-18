@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -11,7 +12,12 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
       emit(SplashLoading());
       await Future.delayed(const Duration(seconds: 3));
       final user = FirebaseAuth.instance.currentUser;
-      if (user != null) {
+      try {
+        await user?.reload();
+      } catch (_) {
+        debugPrint('Error reloading user');
+      }
+      if (FirebaseAuth.instance.currentUser != null) {
         emit(SplashAuthenticated());
       } else {
         emit(SplashUnauthenticated());
