@@ -20,3 +20,7 @@ class TasksError extends TasksState {
   final String message;
   const TasksError(this.message);
 }
+
+class LoggingOut extends TasksState {}
+
+class LoggedOut extends TasksState {}

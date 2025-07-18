@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:tasks_manager/screens/tasks_list/model/task_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 part 'tasks_event.dart';
 part 'tasks_state.dart';
@@ -81,6 +82,12 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
       } catch (e) {
         emit(TasksError(e.toString()));
       }
+    });
+
+    on<LogoutRequested>((event, emit) async {
+      emit(LoggingOut());
+      await FirebaseAuth.instance.signOut();
+      emit(LoggedOut());
     });
   }
 }
