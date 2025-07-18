@@ -108,6 +108,7 @@ class _CategoryManagerViewState extends State<CategoryManagerView> {
                                   );
                                   if (newName != null &&
                                       newName.trim().isNotEmpty) {
+                                    // ignore: use_build_context_synchronously
                                     context.read<CategoriesBloc>().add(
                                       EditCategory(cat['id'], newName.trim()),
                                     );

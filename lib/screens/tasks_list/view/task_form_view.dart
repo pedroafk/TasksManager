@@ -49,7 +49,6 @@ class _TaskFormViewState extends State<TaskFormView> {
         .doc(userId)
         .collection('tasks')
         .add({
-          'userId': userId,
           'title': _titleController.text,
           'description': _descController.text,
           'dueDate': _dueDate,

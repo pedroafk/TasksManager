@@ -27,6 +27,7 @@ class _TasksListViewState extends State<TasksListView> {
                 MaterialPageRoute(builder: (_) => const TaskFormView()),
               );
               if (!mounted) return;
+              // ignore: use_build_context_synchronously
               context.read<TasksBloc>().add(LoadTasks());
             },
           ),

@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class TaskModel {
   final String id;
-  final String userId;
   final String title;
   final String description;
   final DateTime dueDate;
@@ -11,7 +10,6 @@ class TaskModel {
 
   TaskModel({
     required this.id,
-    required this.userId,
     required this.title,
     required this.description,
     required this.dueDate,
@@ -21,7 +19,6 @@ class TaskModel {
 
   factory TaskModel.fromMap(String id, Map<String, dynamic> map) => TaskModel(
     id: id,
-    userId: map['userId'] ?? '',
     title: map['title'],
     description: map['description'],
     dueDate: (map['dueDate'] as Timestamp).toDate(),
@@ -30,7 +27,6 @@ class TaskModel {
   );
 
   Map<String, dynamic> toMap() => {
-    'userId': userId,
     'title': title,
     'description': description,
     'dueDate': dueDate,
