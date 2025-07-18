@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tasks_manager/screens/tasks_list/view/category_manager_view.dart';
-import '../bloc/categories_bloc.dart';
 
 class TaskFormView extends StatefulWidget {
   const TaskFormView({super.key});
@@ -147,10 +145,7 @@ class _TaskFormViewState extends State<TaskFormView> {
                       await Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (_) => BlocProvider(
-                            create: (_) => CategoriesBloc(),
-                            child: const CategoryManagerView(),
-                          ),
+                          builder: (_) => const CategoryManagerView(),
                         ),
                       );
                       await _loadCategories();
